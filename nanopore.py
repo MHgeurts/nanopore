@@ -8,7 +8,7 @@ import shutil
 import subprocess
 import argparse
 
-
+"""
 
 #------------------------- subprocess directories ------------------------#
 
@@ -100,7 +100,7 @@ def main_pipeline():
 		subprocess.call(["nanook_split_fasta", "-i", option["outdir"]+"/Fasta"+"/all_2d.fasta", "-o", option["outdir"]+"/fasta"+"/2D"])
 		subprocess.call(["nanook_split_fasta", "-i", option["outdir"]+"/Fasta"+"/all_template.fasta", "-o", option["outdir"]+"/fasta"+"/Template"])
 		subprocess.call(["nanook_split_fasta", "-i", option["outdir"]+"/Fasta"+"/all_complement.fasta", "-o", option["outdir"]+"/fasta"+"/Complement"])
-	subprocess.call(["nanook", "align", "-s", option["outdir"], "-r" ,human_ref])
+	subprocess.call(["nanook", "align", "-s", option["outdir"], "-r" ,human_ref])"""
 	subprocess.call(["nanook", "analyse", "-s", option["outdir"], "-r" ,human_ref])
 	two_d = glob.glob(option["outdir"]+"/last"+"/2D"+"/*.maf")
 	with open(option["outdir"]+"/last"+"/merged_2D_last.maf", "w+") as files_1:
