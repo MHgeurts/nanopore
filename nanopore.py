@@ -40,7 +40,7 @@ readtype = option["readtype"]
 readcorrection = option["readcorrection"]
 reference = option["refference"]
 
-"""
+
 #------------------------- check input -------------------------#
 
 
@@ -83,24 +83,24 @@ def main_pipeline():
 	#subprocess.call(["poretools","hist",option["indir"]], stdout=open(option["outdir"]+"/run_logs"+"/read_distribution.pdf", "w+"))
 	#subprocess.call(["poretools",option["indir"]], stdout=open(option["outdir"]+"/run_logs"+"/occupancy.pdf", "w+"))
 
-	#create file structure for nanook
-	os.makedirs(option["outdir"]+"/Fasta")
-	os.makedirs(option["outdir"]+"/fasta")
-	os.makedirs(option["outdir"]+"/fasta"+"/Template")
-	os.makedirs(option["outdir"]+"/fasta"+"/Complement")
-	os.makedirs(option["outdir"]+"/fasta"+"/2D")
-	os.makedirs(option["outdir"]+"/mapping")
-	if option["readtype"] == "2D":
-		subprocess.call(["poretools","fasta","--type", "2D" , option["indir"]], stdout=open(option["outdir"]+"/Fasta"+"/all_2d.fasta", "w+"))
-		subprocess.call(["nanook_split_fasta", "-i", option["outdir"]+"/Fasta"+"/all_2d.fasta", "-o", option["outdir"]+"/fasta"+"/2D"])
-	else:
-		subprocess.call(["poretools","fasta","--type", "2D" , option["indir"]], stdout=open(option["outdir"]+"/Fasta"+"/all_2d.fasta", "w+"))
-		subprocess.call(["poretools","fasta","--type", "fwd" , option["indir"]], stdout=open(option["outdir"]+"/Fasta"+"/all_template.fasta", "w+"))
-		subprocess.call(["poretools","fasta","--type", "rev" , option["indir"]], stdout=open(option["outdir"]+"/Fasta"+"/all_complement.fasta", "w+"))
-		subprocess.call(["nanook_split_fasta", "-i", option["outdir"]+"/Fasta"+"/all_2d.fasta", "-o", option["outdir"]+"/fasta"+"/2D"])
-		subprocess.call(["nanook_split_fasta", "-i", option["outdir"]+"/Fasta"+"/all_template.fasta", "-o", option["outdir"]+"/fasta"+"/Template"])
-		subprocess.call(["nanook_split_fasta", "-i", option["outdir"]+"/Fasta"+"/all_complement.fasta", "-o", option["outdir"]+"/fasta"+"/Complement"])
-	subprocess.call(["nanook", "align", "-s", option["outdir"], "-r" ,human_ref])"""
+#create file structure for nanook
+os.makedirs(option["outdir"]+"/Fasta")
+os.makedirs(option["outdir"]+"/fasta")
+os.makedirs(option["outdir"]+"/fasta"+"/Template")
+os.makedirs(option["outdir"]+"/fasta"+"/Complement")
+os.makedirs(option["outdir"]+"/fasta"+"/2D")
+os.makedirs(option["outdir"]+"/mapping")
+if option["readtype"] == "2D":
+	subprocess.call(["poretools","fasta","--type", "2D" , option["indir"]], stdout=open(option["outdir"]+"/Fasta"+"/all_2d.fasta", "w+"))
+	subprocess.call(["nanook_split_fasta", "-i", option["outdir"]+"/Fasta"+"/all_2d.fasta", "-o", option["outdir"]+"/fasta"+"/2D"])
+else:
+	subprocess.call(["poretools","fasta","--type", "2D" , option["indir"]], stdout=open(option["outdir"]+"/Fasta"+"/all_2d.fasta", "w+"))
+	subprocess.call(["poretools","fasta","--type", "fwd" , option["indir"]], stdout=open(option["outdir"]+"/Fasta"+"/all_template.fasta", "w+"))
+	subprocess.call(["poretools","fasta","--type", "rev" , option["indir"]], stdout=open(option["outdir"]+"/Fasta"+"/all_complement.fasta", "w+"))
+	subprocess.call(["nanook_split_fasta", "-i", option["outdir"]+"/Fasta"+"/all_2d.fasta", "-o", option["outdir"]+"/fasta"+"/2D"])
+	subprocess.call(["nanook_split_fasta", "-i", option["outdir"]+"/Fasta"+"/all_template.fasta", "-o", option["outdir"]+"/fasta"+"/Template"])
+	subprocess.call(["nanook_split_fasta", "-i", option["outdir"]+"/Fasta"+"/all_complement.fasta", "-o", option["outdir"]+"/fasta"+"/Complement"])
+subprocess.call(["nanook", "align", "-s", option["outdir"], "-r" ,human_ref])
 subprocess.call(["nanook", "analyse", "-s", option["outdir"], "-r" ,human_ref])
 two_d = glob.glob(option["outdir"]+"/last"+"/2D"+"/*.maf")
 with open(option["outdir"]+"/last"+"/merged_2D_last.maf", "w+") as files_1:
