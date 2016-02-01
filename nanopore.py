@@ -18,7 +18,7 @@ nanocorrectssss = "/usr/local/bin/nanocorrect"
 
 #------------------------- Reference files -------------------------#
 
-human_ref = "/home/maarteng/Documents/references/e.coli/ecoli_dh10b_cs.fasta"
+human_ref = "/data/references/human_GATK_GRCh37/GRC37_gatk.fasta"
 mitochondria_ref = "route/to/directory"
 
 
