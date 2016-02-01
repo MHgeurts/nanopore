@@ -1,4 +1,4 @@
-import pysam
+# import pysam
 import fileinput
 import glob
 import os
