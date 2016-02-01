@@ -8,7 +8,7 @@ import shutil
 import subprocess
 import argparse
 
-"""
+
 
 #------------------------- subprocess directories ------------------------#
 
@@ -40,7 +40,7 @@ readtype = option["readtype"]
 readcorrection = option["readcorrection"]
 reference = option["refference"]
 
-
+"""
 #------------------------- check input -------------------------#
 
 
