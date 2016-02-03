@@ -88,8 +88,7 @@ def main_pipeline():
 	os.makedirs(option["outdir"]+"/fasta"+"/Complement")
 	os.makedirs(option["outdir"]+"/fasta"+"/2D")
 	os.makedirs(option["outdir"]+"/mapping")
-	if option["readtype"] == "2D":
-		
+	
 	# fasta file extraction
 	subprocess.call(["poretools","fasta","--type", "2D" , option["indir"]], stdout=open(option["outdir"]+"/Fasta"+"/all_2d.fasta", "w+"))
 	subprocess.call(["nanook_split_fasta", "-i", option["outdir"]+"/Fasta"+"/all_2d.fasta", "-o", option["outdir"]+"/fasta"+"/2D"])
