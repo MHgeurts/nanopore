@@ -40,7 +40,7 @@ reference = option["refference"]
 
 
 #------------------------- check input -------------------------#
-'''
+
 
 def check_input():
 	f5count = 0 
@@ -108,8 +108,7 @@ def main_pipeline():
 		subprocess.call(["nanook", "analyse", "-s", option["outdir"], "-r" ,human_ref, "-t", "24", "-2donly"])
 	else:
 		subprocess.call(["nanook", "analyse", "-s", option["outdir"], "-r" ,human_ref, "-t", "24"])
-	'''
-def main_pipeline():		
+		
 	#clean up folders 
 	two_d = glob.glob(option["outdir"]+"/last"+"/2D"+"/*.maf")
 	with open(option["outdir"]+"/last"+"/merged_2D_last.maf", "w+") as files_1:
