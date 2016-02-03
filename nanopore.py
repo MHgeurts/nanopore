@@ -89,36 +89,47 @@ def main_pipeline():
 	os.makedirs(option["outdir"]+"/fasta"+"/2D")
 	os.makedirs(option["outdir"]+"/mapping")
 	if option["readtype"] == "2D":
-		subprocess.call(["poretools","fasta","--type", "2D" , option["indir"]], stdout=open(option["outdir"]+"/Fasta"+"/all_2d.fasta", "w+"))
-		subprocess.call(["nanook_split_fasta", "-i", option["outdir"]+"/Fasta"+"/all_2d.fasta", "-o", option["outdir"]+"/fasta"+"/2D"])
+		
+	# fasta file extraction
+	subprocess.call(["poretools","fasta","--type", "2D" , option["indir"]], stdout=open(option["outdir"]+"/Fasta"+"/all_2d.fasta", "w+"))
+	subprocess.call(["nanook_split_fasta", "-i", option["outdir"]+"/Fasta"+"/all_2d.fasta", "-o", option["outdir"]+"/fasta"+"/2D"])
+	subprocess.call(["poretools","fasta","--type", "2D" , option["indir"]], stdout=open(option["outdir"]+"/Fasta"+"/all_2d.fasta", "w+"))
+	if option["readtype"] == "2D":
+		pass
 	else:
-		subprocess.call(["poretools","fasta","--type", "2D" , option["indir"]], stdout=open(option["outdir"]+"/Fasta"+"/all_2d.fasta", "w+"))
 		subprocess.call(["poretools","fasta","--type", "fwd" , option["indir"]], stdout=open(option["outdir"]+"/Fasta"+"/all_template.fasta", "w+"))
 		subprocess.call(["poretools","fasta","--type", "rev" , option["indir"]], stdout=open(option["outdir"]+"/Fasta"+"/all_complement.fasta", "w+"))
 		subprocess.call(["nanook_split_fasta", "-i", option["outdir"]+"/Fasta"+"/all_2d.fasta", "-o", option["outdir"]+"/fasta"+"/2D"])
 		subprocess.call(["nanook_split_fasta", "-i", option["outdir"]+"/Fasta"+"/all_template.fasta", "-o", option["outdir"]+"/fasta"+"/Template"])
 		subprocess.call(["nanook_split_fasta", "-i", option["outdir"]+"/Fasta"+"/all_complement.fasta", "-o", option["outdir"]+"/fasta"+"/Complement"])
+		
+	# read alignment 
 	subprocess.call(["nanook", "align", "-s", option["outdir"], "-r" ,human_ref, "-t", "24"])
 	if option["readtype"] == "2D":
 		subprocess.call(["nanook", "analyse", "-s", option["outdir"], "-r" ,human_ref, "-t", "24", "-2donly"])
 	else:
 		subprocess.call(["nanook", "analyse", "-s", option["outdir"], "-r" ,human_ref, "-t", "24"])
+		
+	#clean up folders 
 	two_d = glob.glob(option["outdir"]+"/last"+"/2D"+"/*.maf")
 	with open(option["outdir"]+"/last"+"/merged_2D_last.maf", "w+") as files_1:
 		lines = fileinput.input(two_d)
 		files_1.writelines(lines)
-	complement = glob.glob(option["outdir"]+"/last"+"/Complement"+"/*.maf")
-	with open(option["outdir"]+"/last"+"/merged_complement_last.maf", "w+") as files_1:
-		lines = fileinput.input(complement)
-		files_1.writelines(lines)
-	template= glob.glob(option["outdir"]+"/last"+"/Template"+"/*.maf")
-	with open(option["outdir"]+"/last"+"/merged_template_last.maf", "w+") as files_1:
-		lines = fileinput.input(template)
-		files_1.writelines(lines)
-	merged = glob.glob(option["outdir"]+"/last"+"/*.maf")
-	with open(option["outdir"]+"/mapping"+"/merged_lastal.maf", "w+") as files_1:
-		lines=fileinput.input(merged)
-		files_1.writelines(lines)
+	if option["readtype"] == "2D":
+		pass
+	else:
+		complement = glob.glob(option["outdir"]+"/last"+"/Complement"+"/*.maf")
+		with open(option["outdir"]+"/last"+"/merged_complement_last.maf", "w+") as files_1:
+			lines = fileinput.input(complement)
+			files_1.writelines(lines)
+		template= glob.glob(option["outdir"]+"/last"+"/Template"+"/*.maf")
+		with open(option["outdir"]+"/last"+"/merged_template_last.maf", "w+") as files_1:
+			lines = fileinput.input(template)
+			files_1.writelines(lines)
+		merged = glob.glob(option["outdir"]+"/last"+"/*.maf")
+		with open(option["outdir"]+"/mapping"+"/merged_lastal.maf", "w+") as files_1:
+			lines=fileinput.input(merged)
+			files_1.writelines(lines)
 	os.makedirs(option["outdir"]+"/nanook_data_files")
 	os.makedirs(option["outdir"]+"/analysis_graphs")
 	shutil.move(option["outdir"]+"/logs", option["outdir"]+"/nanook_data_files")
