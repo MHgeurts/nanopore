@@ -171,11 +171,11 @@ def main_pipeline():
 
 if __name__ == "__main__":
 	print "checking argument input"
-	if check_input():
-		main_pipeline()
+	#if check_input():
+	main_pipeline()
 		
-	else: 
-		print("ERROR in command line input")
+	#else: 
+	#	print("ERROR in command line input")
 
 
 
