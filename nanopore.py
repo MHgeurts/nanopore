@@ -116,6 +116,7 @@ def main_pipeline():
 		lines = fileinput.input(two_d)
 		files_1.writelines(lines)
 	if option["readtype"] == "2D":
+		subprocess.call(["mv", option["outdir"]+"/last"+"/merged_2D_last.maf", option["outdir"]+"/mapping"+"/merged_lastal.maf"])
 		pass
 	else:
 		complement = glob.glob(option["outdir"]+"/last"+"/Complement"+"/*.maf")
@@ -126,10 +127,10 @@ def main_pipeline():
 		with open(option["outdir"]+"/last"+"/merged_template_last.maf", "w+") as files_1:
 			lines = fileinput.input(template)
 			files_1.writelines(lines)
-	merged = glob.glob(option["outdir"]+"/last"+"/*.maf")
-	with open(option["outdir"]+"/mapping"+"/merged_lastal.maf", "w+") as files_1:
-		lines=fileinput.input(merged)
-		files_1.writelines(lines)
+		merged = glob.glob(option["outdir"]+"/last"+"/*.maf")
+		with open(option["outdir"]+"/mapping"+"/merged_lastal.maf", "w+") as files_1:
+			lines=fileinput.input(merged)
+			files_1.writelines(lines)
 	os.makedirs(option["outdir"]+"/nanook_data_files")
 	os.makedirs(option["outdir"]+"/analysis_graphs")
 	shutil.move(option["outdir"]+"/logs", option["outdir"]+"/nanook_data_files")
